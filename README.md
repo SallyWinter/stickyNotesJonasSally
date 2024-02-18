@@ -13,5 +13,4 @@ Dette program er et note program og kan bruges til at lave huskesedler.
 Programmet kræver MSYS2, der kan installeres herfra:
 https://www.msys2.org/
 
-Installer pakken:
-pacman -S mingw-w64-x86_64-gtk4
+Installer pakkerne GTK4 og SQLite3.
