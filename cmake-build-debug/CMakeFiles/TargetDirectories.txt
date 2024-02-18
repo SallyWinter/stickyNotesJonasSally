@@ -1,0 +1,3 @@
+C:/Users/sally/Documents/GitHub/stickyNotesJonasSally/cmake-build-debug/CMakeFiles/StickyNotes.dir
+C:/Users/sally/Documents/GitHub/stickyNotesJonasSally/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/sally/Documents/GitHub/stickyNotesJonasSally/cmake-build-debug/CMakeFiles/rebuild_cache.dir
