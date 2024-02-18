@@ -8,6 +8,9 @@ Dette program er et note program og kan bruges til at lave huskesedler.
 * Rediger noten for at ændre ens indhold.
 * En gruppe kan ikke slettes imens der er noter i den - Slet alle noter i gruppen og slet derefter gruppen.
 
+![image](https://github.com/SallyWinter/stickyNotesJonasSally/assets/88275731/48e833da-6adf-4f5a-ae1b-05b3629b2c19)
+
+
 ### Installation
 
 Programmet kræver MSYS2, der kan installeres herfra:
