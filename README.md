@@ -2,7 +2,7 @@
 
 ### Brugervejledning
 
-Dette program er et note program og kan bruges til at lave huskesedler.
+Dette program er et note program og kan bruges til at lave huskesedler. Der oprettes automatisk en database med navnet "notes.db".
 1. Disse huskesedler er inddelt i grupper. skriv et navn til en gruppe i indtastningsfeltet og tryk opret gruppe for at danne en gruppe.
 1. Klik derefter ind på gruppen og opret en note.
 1. Rediger noten for at ændre ens indhold.
