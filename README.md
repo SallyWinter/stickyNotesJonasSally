@@ -1,6 +1,6 @@
-# stickyNotesJonasSally
+# StickyNotes By Jonas and Sally
 
-### Brugervejledning:
+### Brugervejledning
 
 Dette program er et note program og kan bruges til at lave huskesedler.
 * Disse huskesedler er inddelt i grupper. skriv et navn til en gruppe i indtastningsfeltet og tryk opret gruppe for at danne en gruppe.
