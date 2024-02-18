@@ -8,11 +8,10 @@ Dette program er et note program og kan bruges til at lave huskesedler.
 * Rediger noten for at ændre ens indhold.
 * En gruppe kan ikke slettes imens der er noter i den - Slet alle noter i gruppen og slet derefter gruppen.
 
+### Installation
 
-Vigtigt!
 Programmet kræver MSYS2, der kan installeres herfra:
 https://www.msys2.org/
-
 
 Installer pakken:
 pacman -S mingw-w64-x86_64-gtk4
