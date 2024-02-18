@@ -1,10 +1,8 @@
 # ninja log v5
 1797	2370	7266755715511315	TestGTK4.exe	f5cb85bd689a1a13
-1	238	7298038561538933	build.ninja	712f7d03394a756a
-5	721	7299493462774701	CMakeFiles/StickyNotes.dir/main.c.obj	42cfb5bb39355b3c
-721	850	7299493464024545	StickyNotes.exe	415dffd8a0dc9b9c
+8	889	7299679207445471	CMakeFiles/StickyNotes.dir/main.c.obj	42cfb5bb39355b3c
+3	568	7299718941864129	build.ninja	712f7d03394a756a
+890	1052	7299679209026945	StickyNotes.exe	415dffd8a0dc9b9c
 7	136	7295530043976475	CMakeFiles/StickyNotes.dir/NotesRepo.c.obj	3caf7f69f7f67a8a
-5	726	7299493689666117	CMakeFiles/StickyNotes.dir/main.c.obj	42cfb5bb39355b3c
-726	860	7299493690967533	StickyNotes.exe	415dffd8a0dc9b9c
-4	722	7299494103153402	CMakeFiles/StickyNotes.dir/main.c.obj	42cfb5bb39355b3c
-722	858	7299494104474162	StickyNotes.exe	415dffd8a0dc9b9c
+7	879	7299719089410751	CMakeFiles/StickyNotes.dir/main.c.obj	42cfb5bb39355b3c
+880	1039	7299719090951234	StickyNotes.exe	415dffd8a0dc9b9c

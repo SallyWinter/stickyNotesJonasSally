@@ -1,7 +1,14 @@
-//#include <gtk/gtk.h>
 #include <sqlite3.h>
 #include <stdbool.h>
-#include <stdio.h>
+
+/* NotesRepo.c håndtere kommunikation til databasen
+ * Ideen er at indlæse bufferne, der kan tilgås fra main.c, så man kalder en "load"-funktion
+ * og bagefter tager man fat i bufferen, hvis load-funtionen returnerer et tal større end 0.
+ * Loadfunktionerne starter med at nulstille antallet af fundne rækker (buffer_count), kalder så
+ * databasen, der så kalder callbacks og til sidst vil bufferen være fyldt op med data.
+ * callback-funktionen skal lægge 1 til hver gang den kører for den aktuelle buffers tæller. Der er en tæller til
+ * både grupper og noter.
+ */
 
 // Database variables
 sqlite3 *db;
@@ -10,12 +17,14 @@ int resultCode;
 char *sql;
 const char* data = "Callback function called";
 
+// Gruppe buffer
 #define GROUP_BUFFER_SIZE 25
 #define GROUP_NAME_LENGTH 20
 char buffer_group_names[GROUP_BUFFER_SIZE][GROUP_NAME_LENGTH];
 long buffer_group_ids[GROUP_BUFFER_SIZE] = {0};
 int buffer_group_count = 0;
 
+// Note buffer
 #define NOTE_BUFFER_SIZE 100
 #define NOTE_NAME_LENGTH 50
 #define NOTE_TEXT_LENGTH 1000
@@ -24,7 +33,7 @@ char buffer_note_text[NOTE_BUFFER_SIZE][NOTE_TEXT_LENGTH];
 long buffer_note_ids[NOTE_BUFFER_SIZE] = {0};
 int buffer_note_count = 0;
 
-//
+// Bruges til at returnere en SQL-count
 int repo_get_count(char const* sqlCommand)
 {
     int output = 0;
@@ -50,6 +59,7 @@ int repo_get_count(char const* sqlCommand)
     return output;
 }
 
+// Intern callback til indlæsning af gruppedata
 // Kaldes via SQL SELECT ID, Name FROM Groups
 int _db_load_group_callback(void *data, int argc, char **argv, char **azColName)
 {
@@ -67,7 +77,7 @@ int _db_load_group_callback(void *data, int argc, char **argv, char **azColName)
     return 0;
 }
 
-//
+// Indlæser alle grupper fra databasen til gruppebufferen
 int repo_load_groups_into_buffer() {
     buffer_group_count = 0;
     sql = "SELECT ID, Name FROM Groups ORDER BY ID ASC LIMIT 25";
@@ -81,13 +91,14 @@ int repo_load_groups_into_buffer() {
     return buffer_group_count * 1; // returner antallet af gruper: denne variabel er blevet opdateret i callback
 }
 
-//
+// Returnerer antal af grupper
 int repo_get_group_count()
 {
     int output = repo_get_count("SELECT count(*) GroupCount FROM Groups");
     return output;
 }
 
+// Returnerer antal af noter
 int repo_get_notes_count(int group_id)
 {
     char* sql = sqlite3_mprintf("SELECT count(*) NotesCount FROM Notes WHERE GroupID = %d", group_id);
@@ -96,7 +107,7 @@ int repo_get_notes_count(int group_id)
     return output;
 }
 
-
+// Intern callback til indlæsning af notedata
 int db_load_notes_callback(void *not_used, int argc, char **argv, char **azColumnName)
 {
    if(buffer_note_count > NOTE_BUFFER_SIZE) {
@@ -123,19 +134,11 @@ int db_load_notes_callback(void *not_used, int argc, char **argv, char **azColum
     return 0;
 }
 
-
+// Indlæser alle grupper fra databasen til notebufferen
 int repo_load_notes_into_buffer(int group_id)
 {
     //SELECT ID, Name, Text FROM Notes WHERE GroupID=1;
 
-    /*
-     * Ideen er at indlæse bufferne, der kan tilgås fra main.c, så man kalder en "load"-funktion
-     * og derefter tager man fat i bufferen, hvis load funtionen returnerer et tal større end 0.
-     * Loadfunktionerne starter med at nulstille antallet af fundne poster (buffer_count), kalder så
-     * databasen, der så kalder callbacks og til sidst vil bufferen være fyldt op.
-     * callback funktionen skal lægge 1 til hver gang den kører for den aktuelle buffers tæller - der er en tæller til
-     * både grupper og noter.
-     */
     buffer_note_count = 0;
 
     for(int i = 0; i < NOTE_BUFFER_SIZE; i ++)
@@ -188,6 +191,7 @@ int64_t repo_create_group(const char* group_name)
 
     return last_row_id;
 }
+
 //opretter note
 int64_t repo_create_note(char* note_name, int group_id)
 {
@@ -208,11 +212,6 @@ int64_t repo_create_note(char* note_name, int group_id)
     last_row_id = sqlite3_last_insert_rowid(db);
 
     return last_row_id;
-}
-
-int set_note_color()
-{
-    return true;
 }
 
 //sletter gruppe
@@ -262,15 +261,8 @@ int repo_delete_note(int note_id)
     sqlite3_free(query);
     return true;
 }
-//bliver ikke brugt
-int repo_lock_group(char* password)
-{
-    //UPDATE Groups
-    //SET Password = 'superhemmelig'
-    //WHERE ID = 1;
-    return true;
-}
 
+// Opdaterer note data
 int repo_update_note(int note_id, char *name, char* text)
 {
     //UPDATE Notes
@@ -296,8 +288,7 @@ int repo_update_note(int note_id, char *name, char* text)
     return true;
 }
 
-
-
+// Opretter forbindelse til database, hvis der ikke findes en database oprettes en
 char *repo_open_database_connection(char *database_file_name) {
 
     resultCode = sqlite3_open(database_file_name, &db);
@@ -347,14 +338,13 @@ char *repo_open_database_connection(char *database_file_name) {
             } else {
                 last_database_error_message = "OK";
             }
+            return "Ny database oprettet";
         }
-
-
-        return "Opened database successfully";
+        return "Database åbnet";
     }
 }
 
+// Lukker database connection
 int repo_close_database_connection() {
     return sqlite3_close(db);
 }
-

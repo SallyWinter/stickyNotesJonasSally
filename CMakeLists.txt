@@ -21,8 +21,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
 
     set_target_properties(StickyNotes PROPERTIES WIN32_EXECUTABLE true)  # If you dont want console to run with your .exe
     target_link_libraries(StickyNotes LINK_PUBLIC ${GTK4_LIBRARIES})
-    target_link_libraries(StickyNotes LINK_PUBLIC sqlite3) # denne her linje gjorde tricket sammen med LINK_PUBLIC i linjen ovenover
-
+    target_link_libraries(StickyNotes LINK_PUBLIC sqlite3)
 
 endif()
 
